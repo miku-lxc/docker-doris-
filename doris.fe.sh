@@ -39,7 +39,7 @@ path_d2='apache-doris-fe-1.2.2-bin-x86_64 /opt/apache-doris/fe'
 #wget -cP /miku/docker-build/fe/resource/ https://github.com/apache/doris/blob/f1dde20315bebad1f685a512a983a52243e9bba3/docker/runtime/fe/resource/init_fe.sh
 
 #由于官网的包是xz的，dockerile的add不支持所以下解压工具然后再压缩文件为tar
-
+##对上一段进行说明，注意路径一定要在dockerfile的路径下一级，不支持绝对路径的。
 
 cat >>Dockerfile << EOF
 #注意有全局变量的在EOF中是会自动生效的所以可以利用这个性质自己设置全局 用‘’使里面的不生效
