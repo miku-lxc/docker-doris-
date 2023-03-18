@@ -1,0 +1,45 @@
+
+#compose的编排脚本
+version: '3'
+services:
+  docker-fe:
+    image: "my_doris:23.3.0-fe"
+    container_name: "doris-fe"
+    hostname: "fe"
+    environment:
+      - FE_SERVERS=fe1:172.19.0.20:9010 
+      - FE_ID=1
+    ports:
+      - 8030:8030
+      - 9030:9030
+    volumes:
+      - /data/fe/doris-meta:/opt/apache-doris/fe/doris-meta
+      - /data/fe/conf:/opt/apache-doris/fe/conf
+      - /data/fe/log:/opt/apache-doris/fe/log
+    networks:
+      doris_net:
+        ipv4_address: 172.19.0.20
+  docker-be:
+    image: "my_doris:23.3.0-be"
+    container_name: "doris-be"
+    hostname: "be"
+    depends_on:
+      - docker-fe
+    environment:
+      - FE_SERVERS=fe1:172.19.0.20:9010
+      - BE_ADDR=172.19.0.21:9050
+    ports:
+      - 8040:8040
+    volumes:
+      - /data/be/storage:/opt/apache-doris/be/storage
+      - /data/be/conf:/opt/apache-doris/be/conf
+      - /data/be/script:/docker-entrypoint-initdb.d
+      - /data/be/log:/opt/apache-doris/be/log
+    networks:
+      doris_net:
+        ipv4_address: 172.19.0.21
+networks:
+  doris_net:
+    ipam:
+      config:
+        - subnet: 172.19.0.0/16
