@@ -4,7 +4,9 @@ This is a  project about docker and doris .it is using programer of shell in thi
 一、总体思路
   
   0.简介
-  本次实施主要是编写shell脚本，将
+  
+  本次实施主要是编写shell脚本，将docker的一些技术和doris结合起来，利用docker的容器，将doris装入容器，实现批量部署，而shell则是最底层的，负责将docker的
+  镜像构建、compose部署、准备环境、相关指令 等都集中在一个脚本中，从而实现批量部署的目的，在脚本中加上里一些交互，比上一次的hadoop搭建更加人性化。有了很大的改变
   
   2.技术解释
   
